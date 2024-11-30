@@ -5,12 +5,18 @@ import { ValidationError } from "../../../domain/errors/validation.error";
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  restriction = async (req: Request, res: Response): Promise<void> => {
+    res.json({
+      message: "You are authorized",
+    });
+  };
+
   register = async (req: Request, res: Response): Promise<void> => {
     try {
-      const user = await this.authService.register(req.body);
+      const token = await this.authService.register(req.body);
       res.status(201).json({
         message: "User registered successfully",
-        userId: user.id,
+        token,
       });
     } catch (error) {
       if (error instanceof ValidationError) {

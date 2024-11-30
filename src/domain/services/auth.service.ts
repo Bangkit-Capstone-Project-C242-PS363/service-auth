@@ -3,11 +3,16 @@ import type { UserRepository } from "../repositories/user.repository";
 import type { RegisterUserDTO, LoginUserDTO } from "../dto/auth.dto";
 import type { User } from "../entities/user.entity";
 import { ValidationError } from "../errors/validation.error";
+import { JWTService } from "./jwt.service";
+import bcrypt from "bcrypt";
 
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JWTService,
+  ) {}
 
-  async register(dto: RegisterUserDTO): Promise<User> {
+  async register(dto: RegisterUserDTO): Promise<string> {
     await this.validateRegistration(dto);
 
     const hashedPassword = await hash(dto.password, 10);
@@ -21,21 +26,33 @@ export class AuthService {
       updatedAt: new Date(),
     };
 
-    return this.userRepository.save(user);
+    this.userRepository.save(user);
+
+    const token = this.jwtService.generateToken({
+      userId: user.id,
+      email: user.email,
+    });
+
+    return token;
   }
 
-  async login(dto: LoginUserDTO): Promise<string> {
-    const user = await this.userRepository.findByEmail(dto.email);
+  async login(data: LoginUserDTO): Promise<string> {
+    const user = await this.userRepository.findByEmail(data.email);
     if (!user) {
-      throw new ValidationError(["Invalid email or password"]);
+      throw new ValidationError("Invalid credentials");
     }
 
-    const passwordMatch = await compare(dto.password, user.password);
-    if (!passwordMatch) {
-      throw new ValidationError(["Invalid email or password"]);
+    const isPasswordValid = await bcrypt.compare(data.password, user.password);
+    if (!isPasswordValid) {
+      throw new ValidationError("Invalid credentials");
     }
 
-    return "JWT_TOKEN"; // Implement JWT token generation
+    const token = this.jwtService.generateToken({
+      userId: user.id,
+      email: user.email,
+    });
+
+    return token;
   }
 
   private async validateRegistration(dto: RegisterUserDTO): Promise<void> {
@@ -74,7 +91,7 @@ export class AuthService {
     }
 
     if (errors.length > 0) {
-      throw new ValidationError(errors);
+      throw new ValidationError(errors.join(". "));
     }
   }
 

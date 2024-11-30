@@ -1,5 +1,5 @@
 export class ValidationError extends Error {
-  constructor(public readonly errors: string[]) {
+  constructor(public readonly errors: string) {
     super("Validation Error");
     this.name = "ValidationError";
 
