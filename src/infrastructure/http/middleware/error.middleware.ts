@@ -10,7 +10,7 @@ export const errorHandler = (
 ) => {
   if (error instanceof ValidationError) {
     return res.status(400).json({
-      errors: error.errors,
+      error: error.error,
     });
   }
 

@@ -56,42 +56,42 @@ export class AuthService {
   }
 
   private async validateRegistration(dto: RegisterUserDTO): Promise<void> {
-    const errors: string[] = [];
+    const error: string[] = [];
     if (!dto.username) {
-      errors.push("Username is required");
+      error.push("Username is required");
     }
 
     if (!dto.email) {
-      errors.push("Email is required");
+      error.push("Email is required");
     }
 
     if (!dto.password) {
-      errors.push("Password is required");
+      error.push("Password is required");
     }
 
     if (!dto.confirmPassword) {
-      errors.push("Confirm password is required");
+      error.push("Confirm password is required");
     }
 
     if (dto.email && !this.isValidEmail(dto.email)) {
-      errors.push("Invalid email format");
+      error.push("Invalid email format");
     }
 
     if (dto.password && dto.password.length < 8) {
-      errors.push("Password must be at least 8 characters long");
+      error.push("Password must be at least 8 characters long");
     }
 
     if (dto.password !== dto.confirmPassword) {
-      errors.push("Passwords do not match");
+      error.push("Passwords do not match");
     }
 
     const existingUser = await this.userRepository.findByEmail(dto.email);
     if (existingUser) {
-      errors.push("Email already registered");
+      error.push("Email already registered");
     }
 
-    if (errors.length > 0) {
-      throw new ValidationError(errors.join(". "));
+    if (error.length > 0) {
+      throw new ValidationError(error.join(". "));
     }
   }
 

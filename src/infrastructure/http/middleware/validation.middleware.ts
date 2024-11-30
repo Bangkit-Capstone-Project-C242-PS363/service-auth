@@ -31,7 +31,7 @@ export const validateRegisterInput = async (
     }
 
     return res.status(500).json({
-      errors: ["Internal server error"],
+      error: "Internal server error",
     });
   }
 };
@@ -56,7 +56,7 @@ export const validateLoginInput = async (
       return res.status(400).json({ error: errorMessage });
     }
     return res.status(500).json({
-      errors: ["Internal server error"],
+      error: "Internal server error",
     });
   }
 };

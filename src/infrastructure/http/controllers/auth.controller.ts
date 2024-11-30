@@ -21,7 +21,7 @@ export class AuthController {
     } catch (error) {
       if (error instanceof ValidationError) {
         res.status(400).json({
-          errors: error.errors,
+          error: error.error,
         });
         return;
       }
@@ -42,7 +42,7 @@ export class AuthController {
     } catch (error) {
       if (error instanceof ValidationError) {
         res.status(400).json({
-          errors: error.errors,
+          error: error.error,
         });
         return;
       }

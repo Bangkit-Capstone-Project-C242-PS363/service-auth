@@ -53,11 +53,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example: ["Internal server error"]
+                  error:
+                    type: string
+                    example: "Internal server error"
   /auth/register:
     post:
       tags:
