@@ -100,18 +100,9 @@ paths:
                   message:
                     type: string
                     example: "User registered successfully"
-                  user:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: "12345"
-                      username:
-                        type: string
-                        example: "john_doe"
-                      email:
-                        type: string
-                        example: "john@example.com"
+                  token:
+                    type: string
+                    example: "User registered successfully"
         "400":
           description: Invalid input
           content:
@@ -174,18 +165,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  message:
+                    type: string
+                    example: "User logged in successfully"
                   token:
                     type: string
                     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                  user:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      username:
-                        type: string
-                      email:
-                        type: string
         "401":
           description: Invalid credentials
           content:
