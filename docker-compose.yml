@@ -1,0 +1,8 @@
+version: "3"
+services:
+  auth:
+    image: signmaster-auth
+    build: .
+    container_name: signmaster-auth
+    ports:
+      - "3000:3000"
