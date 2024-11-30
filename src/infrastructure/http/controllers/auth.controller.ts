@@ -25,4 +25,25 @@ export class AuthController {
       });
     }
   };
+
+  login = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const token = await this.authService.login(req.body);
+      res.status(200).json({
+        message: "User logged in successfully",
+        token,
+      });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        res.status(400).json({
+          errors: error.errors,
+        });
+        return;
+      }
+
+      res.status(500).json({
+        error: "Internal server error",
+      });
+    }
+  };
 }

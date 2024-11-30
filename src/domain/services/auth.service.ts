@@ -24,6 +24,20 @@ export class AuthService {
     return this.userRepository.save(user);
   }
 
+  async login(dto: LoginUserDTO): Promise<string> {
+    const user = await this.userRepository.findByEmail(dto.email);
+    if (!user) {
+      throw new ValidationError(["Invalid email or password"]);
+    }
+
+    const passwordMatch = await compare(dto.password, user.password);
+    if (!passwordMatch) {
+      throw new ValidationError(["Invalid email or password"]);
+    }
+
+    return "JWT_TOKEN"; // Implement JWT token generation
+  }
+
   private async validateRegistration(dto: RegisterUserDTO): Promise<void> {
     const errors: string[] = [];
     if (!dto.username) {
