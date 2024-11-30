@@ -5,6 +5,7 @@ import type { User } from "../entities/user.entity";
 import { ValidationError } from "../errors/validation.error";
 import { JWTService } from "./jwt.service";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 
 export class AuthService {
   constructor(
@@ -18,7 +19,7 @@ export class AuthService {
     const hashedPassword = await hash(dto.password, 10);
 
     const user: User = {
-      id: Date.now().toString(), // Use UUID in production
+      id: uuidv4(),
       username: dto.username,
       email: dto.email,
       password: hashedPassword,
