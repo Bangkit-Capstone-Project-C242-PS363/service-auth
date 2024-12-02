@@ -9,3 +9,9 @@ export interface LoginUserDTO {
   email: string;
   password: string;
 }
+
+export interface AuthResponse {
+  userId: string;
+  name: string;
+  token: string;
+}

@@ -27,11 +27,15 @@ export const validateRegisterInput = async (
         .map((detail) => detail.message)
         .join(". ")
         .replaceAll('"', "'");
-      return res.status(400).json({ error: errorMessage });
+      return res.status(400).json({
+        error: true,
+        message: errorMessage,
+      });
     }
 
     return res.status(500).json({
-      error: "Internal server error",
+      error: true,
+      message: "Internal server error",
     });
   }
 };
@@ -53,10 +57,14 @@ export const validateLoginInput = async (
         .map((detail) => detail.message)
         .join(". ")
         .replaceAll('"', "'");
-      return res.status(400).json({ error: errorMessage });
+      return res.status(400).json({
+        error: true,
+        message: errorMessage,
+      });
     }
     return res.status(500).json({
-      error: "Internal server error",
+      error: true,
+      message: "Internal server error",
     });
   }
 };
@@ -71,7 +79,8 @@ export const validateToken = async (
 
     if (!token) {
       return res.status(401).json({
-        error: "Access denied. No token provided",
+        error: true,
+        message: "Access denied. No token provided",
       });
     }
 
@@ -80,7 +89,8 @@ export const validateToken = async (
     next();
   } catch (error) {
     return res.status(401).json({
-      error: "Invalid token",
+      error: true,
+      message: "Invalid token",
     });
   }
 };

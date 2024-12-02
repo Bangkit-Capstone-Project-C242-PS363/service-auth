@@ -1,10 +1,15 @@
 import { hash, compare } from "bcrypt";
 import type { UserRepository } from "../repositories/user.repository";
-import type { RegisterUserDTO, LoginUserDTO } from "../dto/auth.dto";
+import type {
+  RegisterUserDTO,
+  LoginUserDTO,
+  AuthResponse,
+} from "../dto/auth.dto";
 import type { User } from "../entities/user.entity";
 import { ValidationError } from "../errors/validation.error";
 import { JWTService } from "./jwt.service";
 import bcrypt from "bcrypt";
+
 import { v4 as uuidv4 } from "uuid";
 
 export class AuthService {
@@ -13,7 +18,7 @@ export class AuthService {
     private readonly jwtService: JWTService,
   ) {}
 
-  async register(dto: RegisterUserDTO): Promise<string> {
+  async register(dto: RegisterUserDTO): Promise<AuthResponse> {
     await this.validateRegistration(dto);
 
     const hashedPassword = await hash(dto.password, 10);
@@ -31,13 +36,18 @@ export class AuthService {
 
     const token = this.jwtService.generateToken({
       userId: user.id,
+      username: user.username,
       email: user.email,
     });
 
-    return token;
+    return {
+      userId: user.id,
+      name: user.username,
+      token,
+    };
   }
 
-  async login(data: LoginUserDTO): Promise<string> {
+  async login(data: LoginUserDTO): Promise<AuthResponse> {
     const user = await this.userRepository.findByEmail(data.email);
     if (!user) {
       throw new ValidationError("Invalid credentials");
@@ -53,7 +63,11 @@ export class AuthService {
       email: user.email,
     });
 
-    return token;
+    return {
+      userId: user.id,
+      name: user.username,
+      token,
+    };
   }
 
   private async validateRegistration(dto: RegisterUserDTO): Promise<void> {
