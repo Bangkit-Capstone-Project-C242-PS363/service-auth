@@ -14,4 +14,8 @@ export class JWTService {
   verifyToken(token: string): any {
     return jwt.verify(token, this.secretKey);
   }
+
+  decodeToken(token: string): any {
+    return jwt.decode(token);
+  }
 }

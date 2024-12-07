@@ -29,4 +29,12 @@ export class InMemoryUserRepository implements UserRepository {
   async isSubscribe(id: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
+
+  async subscribe(id: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  async unsubscribe(id: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 }

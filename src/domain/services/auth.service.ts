@@ -78,6 +78,18 @@ export class AuthService {
     };
   }
 
+  async subscribe(userId: string): Promise<void> {
+    const isSubscribe = this.userRepository.isSubscribe(userId);
+    if (!!isSubscribe) {
+      return;
+    }
+    await this.userRepository.subscribe(userId);
+  }
+
+  async unsubscribe(userId: string): Promise<void> {
+    await this.userRepository.unsubscribe(userId);
+  }
+
   private async validateRegistration(dto: RegisterUserDTO): Promise<void> {
     const error: string[] = [];
     if (!dto.username) {

@@ -12,6 +12,8 @@ export const createAuthRouter = (authController: AuthController): Router => {
   router.post("/register", validateRegisterInput, authController.register);
   router.post("/login", validateLoginInput, authController.login);
   router.get("/restriction", validateToken, authController.restriction);
+  router.get("/subscribe", validateToken, authController.subscribe);
+  router.get("/unsubscribe", validateToken, authController.unsubscribe);
 
   return router;
 };

@@ -104,4 +104,26 @@ export class PostgresUserRepository implements UserRepository {
       throw error;
     }
   }
+
+  async subscribe(id: string): Promise<void> {
+    const query = "INSERT INTO subscribe (userid) VALUES ($1)";
+
+    try {
+      await this.pool.query(query, [id]);
+    } catch (error) {
+      console.error("Error subscribing user:", error);
+      throw error;
+    }
+  }
+
+  async unsubscribe(id: string): Promise<void> {
+    const query = "DELETE FROM subscribe WHERE userid = $1";
+
+    try {
+      await this.pool.query(query, [id]);
+    } catch (error) {
+      console.error("Error unsubscribing user:", error);
+      throw error;
+    }
+  }
 }

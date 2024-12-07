@@ -34,3 +34,9 @@ token=$(echo $output | jq -r .loginResult.token)
 echo -e "\n\nMust be able to access with token"
 curl $HOST/auth/restriction \
   -H "Authorization: Bearer $token" 2>/dev/null | jq
+
+curl $HOST/auth/subscribe \
+  -H "Authorization: Bearer $token " 2>/dev/null | jq
+
+curl $HOST/auth/unsubscribe \
+  -H "Authorization: Bearer $token " 2>/dev/null | jq
