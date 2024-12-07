@@ -33,6 +33,7 @@ export class AuthService {
     };
 
     this.userRepository.save(user);
+    const isSubscribe = await this.userRepository.isSubscribe(user.id);
 
     const token = this.jwtService.generateToken({
       userId: user.id,
@@ -43,6 +44,8 @@ export class AuthService {
     return {
       userId: user.id,
       name: user.username,
+      email: user.email,
+      isSubscribe,
       token,
     };
   }
@@ -58,15 +61,19 @@ export class AuthService {
       throw new ValidationError("Invalid credentials");
     }
 
+    const isSubscribe = await this.userRepository.isSubscribe(user.id);
+
     const token = this.jwtService.generateToken({
       userId: user.id,
       email: user.email,
+      isSubscribe,
     });
 
     return {
       userId: user.id,
       name: user.username,
       email: user.email,
+      isSubscribe,
       token,
     };
   }

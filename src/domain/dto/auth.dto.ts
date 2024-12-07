@@ -14,5 +14,6 @@ export interface AuthResponse {
   userId: string;
   name: string;
   email: string;
+  isSubscribe: boolean;
   token: string;
 }

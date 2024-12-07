@@ -92,4 +92,16 @@ export class PostgresUserRepository implements UserRepository {
       throw error;
     }
   }
+
+  async isSubscribe(id: string): Promise<boolean> {
+    const query = "SELECT id FROM subscribe WHERE userid = $1";
+
+    try {
+      const result = await this.pool.query(query, [id]);
+      return result.rows.length > 0;
+    } catch (error) {
+      console.error("Error finding user by id:", error);
+      throw error;
+    }
+  }
 }

@@ -25,4 +25,8 @@ export class InMemoryUserRepository implements UserRepository {
     this.users.push(user);
     return user;
   }
+
+  async isSubscribe(id: string): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
 }
