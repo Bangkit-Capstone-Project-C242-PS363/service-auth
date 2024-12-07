@@ -1,5 +1,6 @@
 # HOST=https://signmaster-auth-304278585381.asia-southeast2.run.app
 HOST=http://34.50.84.107
+HOST=http://localhost:3000
 echo "Cant access without token"
 curl $HOST/auth/restriction 2>/dev/null | jq
 
