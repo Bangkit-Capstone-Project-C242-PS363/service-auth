@@ -79,8 +79,8 @@ export class AuthService {
   }
 
   async subscribe(userId: string): Promise<void> {
-    const isSubscribe = this.userRepository.isSubscribe(userId);
-    if (!!isSubscribe) {
+    const isSubscribe = await this.userRepository.isSubscribe(userId);
+    if (isSubscribe) {
       return;
     }
     await this.userRepository.subscribe(userId);
