@@ -1,8 +1,13 @@
 # Service Auth
 
+`HOST:https://signmaster-auth-kji5w4ybbq-et.a.run.app`
+
 ## Register
+
+### Request
+
 ```http
-GET https://signmaster-auth-kji5w4ybbq-et.a.run.app/auth/register
+GET /auth/register
 {
   "username": string,
   "email": string,
@@ -11,11 +16,40 @@ GET https://signmaster-auth-kji5w4ybbq-et.a.run.app/auth/register
 }
 ```
 
-## Login
+### Response
+
 ```http
-GET https://signmaster-auth-kji5w4ybbq-et.a.run.app/auth/login
+{
+  "message": string
+  "error": boolean
+}
+
+```
+
+## Login
+
+### Request
+
+```http
+GET /auth/login
 {
   "email": string,
   "password": string,
+}
+```
+
+### Response
+
+```http
+{
+  "error": boolean
+  "message": string
+  "loginResult": {
+    "userId": string,
+    "name": string,
+    "email": string,
+    "isSubscribe": boolean,
+    "token": string
+  }
 }
 ```

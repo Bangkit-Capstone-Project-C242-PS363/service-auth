@@ -1,6 +1,4 @@
-# HOST=https://signmaster-auth-304278585381.asia-southeast2.run.app
-HOST=http://34.50.84.107
-# HOST=http://localhost:3000
+HOST=https://signmaster-auth-kji5w4ybbq-et.a.run.app
 echo "Cant access without token"
 curl $HOST/auth/restriction 2>/dev/null | jq
 
@@ -14,7 +12,7 @@ echo -e "\n\nMust be registered succesfully"
 curl $HOST/auth/register \
   -X POST \
   -H "Content-Type: application/json " \
-  -d '{"username": "test", "email": "test@test.com", "password": "123456789", "confirmPassword": "123456789"}' 2>/dev/null | jq
+  -d '{"username": "testa", "email": "atest@test.com", "password": "123456789", "confirmPassword": "123456789"}' 2>/dev/null | jq
 
 echo -e "\n\nMust be failed login with wrong password"
 curl $HOST/auth/login \
