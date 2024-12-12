@@ -4,10 +4,10 @@
 ```http
 GET https://signmaster-auth-kji5w4ybbq-et.a.run.app/auth/register
 {
-  username: string,
-  email: string,
-  password: string,
-  confirmPassword: string
+  "username": string,
+  "email": string,
+  "password": string,
+  "confirmPassword": string
 }
 ```
 
@@ -15,7 +15,7 @@ GET https://signmaster-auth-kji5w4ybbq-et.a.run.app/auth/register
 ```http
 GET https://signmaster-auth-kji5w4ybbq-et.a.run.app/auth/login
 {
-  email: string,
-  password: string,
+  "email": string,
+  "password": string,
 }
 ```
